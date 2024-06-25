@@ -9,6 +9,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const moment = require('moment');
 const cors = require('cors');
+const { getAdvice } = require('./src/anthropic');
 const { getStartAndEndDates } = require('./src/utils/getDates');
 const { calculateScore } = require('./src/utils/calculateScore');
 
@@ -322,8 +323,9 @@ app.get('/api/score/get', function (request, response, next) {
 
         const dates = getStartAndEndDates(simplifiedTransactions);
         const score = calculateScore(simplifiedTransactions, totalAvailableBalance);
+        const advice = await getAdvice(JSON.stringify(simplifiedTransactions));
 
-        response.json({ dates, simplifiedTransactions, score: score.toFixed(2) });
+        response.json({ dates, simplifiedTransactions, score: score.toFixed(2), advice });
     })
     .catch(next);
 });
