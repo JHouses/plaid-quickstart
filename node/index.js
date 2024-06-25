@@ -9,6 +9,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const moment = require('moment');
 const cors = require('cors');
+const { getStartAndEndDates } = require('./src/utils/getDates');
 
 const APP_PORT = process.env.APP_PORT || 8000;
 const PLAID_CLIENT_ID = process.env.PLAID_CLIENT_ID;
@@ -268,6 +269,53 @@ app.get('/api/transactions', function (request, response, next) {
       // Return the 8 most recent transactions
       const recently_added = [...added].sort(compareTxnsByDateAscending).slice(-8);
       response.json({latest_transactions: recently_added});
+    })
+    .catch(next);
+});
+
+// Retrieve Transactions information for an Item
+app.get('/api/score/get', function (request, response, next) {
+  Promise.resolve()
+    .then(async function () {
+        // Set cursor to empty to receive all historical updates
+        let cursor = null;
+
+        // New transaction updates since "cursor"
+        let added = [];
+        let accounts = [];
+        let hasMore = true;
+
+        // Iterate through each page of new transaction updates for item
+        while (hasMore) {
+          const request = {
+            access_token: ACCESS_TOKEN,
+            cursor: cursor,
+          };
+          const response = await client.transactionsSync(request)
+          const data = response.data;
+
+          accounts = data.accounts;
+          // Add this page of results
+          added = added.concat(data.added);
+          hasMore = data.has_more;
+
+          // Update cursor to the next cursor
+          cursor = data.next_cursor;
+        }
+        const totalAvailableBalance = accounts.reduce((total, account) => {
+          return total + (account.balances.available || 0);
+        }, 0);
+
+        const simplifiedTransactions = added.map(transaction => ({
+          category: transaction.category,
+          amount: transaction.amount,
+          date: transaction.date,
+          name: transaction.name
+        }));
+
+        const dates = getStartAndEndDates(simplifiedTransactions);
+
+        response.json({ dates, totalAvailableBalance, simplifiedTransactions });
     })
     .catch(next);
 });
