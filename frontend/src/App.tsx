@@ -1,14 +1,13 @@
 import React, { useEffect, useContext, useCallback } from "react";
 
 import Header from "./Components/Headers";
-import Products from "./Components/ProductTypes/Products";
-import Items from "./Components/ProductTypes/Items";
 import Context from "./Context";
 
 import styles from "./App.module.scss";
+import MoneyAdvisor from "./Components/MoneyAdvisor";
 
 const App = () => {
-  const { linkSuccess, isItemAccess, isPaymentInitiation, dispatch } = useContext(Context);
+  const { linkSuccess, dispatch } = useContext(Context);
 
   const getInfo = useCallback(async () => {
     const response = await fetch("/api/info", { method: "POST" });
@@ -87,17 +86,7 @@ const App = () => {
       <div className={styles.container}>
         <Header />
         {linkSuccess && (
-          <>
-            {isPaymentInitiation && (
-              <Products />
-            )}
-            {isItemAccess && (
-              <>
-                <Products />
-                <Items />
-              </>
-            )}
-          </>
+          <MoneyAdvisor />
         )}
       </div>
     </div>

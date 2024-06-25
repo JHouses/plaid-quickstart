@@ -1,0 +1,35 @@
+@import "~plaid-threads/scss/variables";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scoreContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+  width: 250px;
+  border-radius: 50%;
+  background-color: #f3f3f3;
+}
+
+.scoreContainer h3 {
+  font-size: 3rem;
+}
+
+.adviceContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 5 * $unit;
+}
+
+.adviceContainer h3 {
+  line-height: 1;
+  font-size: 3rem;
+}
