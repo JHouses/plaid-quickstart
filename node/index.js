@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 const moment = require('moment');
 const cors = require('cors');
 const { getStartAndEndDates } = require('./src/utils/getDates');
+const { calculateScore } = require('./src/utils/calculateScore');
 
 const APP_PORT = process.env.APP_PORT || 8000;
 const PLAID_CLIENT_ID = process.env.PLAID_CLIENT_ID;
@@ -302,6 +303,12 @@ app.get('/api/score/get', function (request, response, next) {
           // Update cursor to the next cursor
           cursor = data.next_cursor;
         }
+        const hasCheckingAccount = accounts.some(account => account.subtype === 'checking');
+
+        if (!hasCheckingAccount) {
+          return response.status(400).json({ error: 'Error: Checking account not detected.' });
+        }
+
         const totalAvailableBalance = accounts.reduce((total, account) => {
           return total + (account.balances.available || 0);
         }, 0);
@@ -314,8 +321,9 @@ app.get('/api/score/get', function (request, response, next) {
         }));
 
         const dates = getStartAndEndDates(simplifiedTransactions);
+        const score = calculateScore(simplifiedTransactions, totalAvailableBalance);
 
-        response.json({ dates, totalAvailableBalance, simplifiedTransactions });
+        response.json({ dates, simplifiedTransactions, score: score.toFixed(2) });
     })
     .catch(next);
 });
