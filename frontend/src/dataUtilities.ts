@@ -836,3 +836,21 @@ export const transformIncomePaystubsData = (data: IncomePaystub) => {
   }
   return finalArray;
 };
+
+export interface TransactionsData {
+  date: string;
+  amount: number;
+  category: string[];
+  name: string;
+}
+
+interface ScoreDates {
+  startDate: string;
+  endDate: string;
+}
+export interface ScoreData {
+  score: string;
+  advice: string;
+  dates: ScoreDates;
+  simplifiedTransactions: TransactionsData;
+}
