@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   margin: auto;
+  padding: 2 * $unit;
   margin-bottom: 2 * $unit;
 }
 
@@ -16,7 +17,7 @@
 }
 
 .subtitle {
-  margin-top: 0;
+  margin-top: 8 * $unit;
   margin-bottom: 3 * $unit;
 }
 
