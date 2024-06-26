@@ -1,24 +1,57 @@
 @import "~plaid-threads/scss/variables";
 
-.container {
+.advisorContainer {
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  color: #fff;
+  background-image: linear-gradient(#9C82FA, rgb(66, 45, 177));
 }
 
-.scoreContainer {
+.advisorTitle {
+  margin: 0;
+  color: rgb(255, 255, 255);
+  font-weight: 500;
+}
+
+.advisorScoreContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  height: 250px;
-  width: 250px;
+  padding: 1 * $unit;
+  height: 20 * $unit;
+  width: 20 * $unit;
+  margin-top: 1 * $unit;
   border-radius: 50%;
-  background-color: #f3f3f3;
+  background-image: linear-gradient(rgb(66, 45, 177), #9C82FA);
 }
 
-.scoreContainer h3 {
-  font-size: 3rem;
+.advisorScore {
+  margin: 0;
+  font-size: 6 * $unit;
+  text-align: center;
+  font-weight: 600;
+  color: #fff;
+}
+
+.advisorTotal {
+  margin: 0;
+  font-size: 2 * $unit;
+  font-weight: 600;
+  text-align: center;
+  color: rgb(255, 255, 255);
+}
+
+.advisorDates {
+  display: flex;
+  padding: 2 * $unit 0;
+  flex-direction: column;
+  text-align: center;
+  font-size: 2 * $unit;
+  color: rgb(255, 255, 255);
 }
 
 .adviceContainer {
@@ -26,10 +59,16 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0 5 * $unit;
+  padding: 0 2 * $unit;
 }
 
-.adviceContainer h3 {
-  line-height: 1;
-  font-size: 3rem;
+.adviceTitle {
+  margin: 0;
+  font-weight: 600;
+  font-size: 3 * $unit;
+}
+
+.adviceDescription {
+  margin: 0;
+  font-weight: 300;
 }
