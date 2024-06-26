@@ -10,15 +10,16 @@
 }
 
 .title {
-  margin-top: 9 * $unit;
+  margin-top: 8 * $unit;
   margin-bottom: 0;
   font-weight: 800;
-  height: 6 * $unit;
+  text-align: center;
 }
 
 .subtitle {
   margin-top: 8 * $unit;
   margin-bottom: 3 * $unit;
+  text-align: center;
 }
 
 .introPar {
@@ -29,6 +30,8 @@
 
 .linkButton {
   margin-top: 3 * $unit;
+  display: flex;
+  justify-content: center;
 }
 
 .itemAccessContainer {

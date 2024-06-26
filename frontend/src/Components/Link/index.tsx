@@ -75,8 +75,8 @@ const Link = () => {
   }, [ready, open, isOauth]);
 
   return (
-    <Button type="button" large onClick={() => open()} disabled={!ready}>
-      Connect with your account
+    <Button type="button" onClick={() => open()} disabled={!ready}>
+      Connect
     </Button>
   );
 };

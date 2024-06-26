@@ -10,7 +10,8 @@ $threads-font-path: "~plaid-threads/fonts";
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 70 * $unit;
-  max-width: 120 * $unit;
+  @media (min-width: 768px) {
+    max-width: 60 * $unit;
+  }
   margin: 0 auto;
 }

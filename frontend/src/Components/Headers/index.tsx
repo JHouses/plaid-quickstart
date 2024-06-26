@@ -18,13 +18,13 @@ const Header = () => {
 
   return (
     <div className={styles.grid}>
-      <h3 className={styles.title}>Welcome to your personal money advisor</h3>
+      <h4 className={styles.title}>Welcome to your personal money advisor</h4>
 
       {!linkSuccess && (
         <>
-          <h4 className={styles.subtitle}>
-            A sample end-to-end integration with Plaid
-          </h4>
+          <h5 className={styles.subtitle}>
+            To connect your account, view your score, and receive recommendations from the money advisor, please click 'Connect'.
+          </h5>
           {/* message if backend is not running and there is no link token */}
           {!backend ? (
             <Callout warning>
