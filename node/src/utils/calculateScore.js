@@ -1,21 +1,38 @@
+const { calculateDaysBetweenDates } = require('./calculateDaysBetweenDates');
+
 // Calculate score based on transactions
-const calculateScore = (transactions, totalAvailableBalance) => {
+const calculateScore = (transactions, totalAvailableBalance, dates) => {
   let currentBalance = totalAvailableBalance;
-  let positiveBalanceTime = 0;
-  let totalTime = 0;
+  let positiveBalanceTimeInDays = 0;
+  let previousDate = new Date(dates.startDate);
+  const totalTimeInDays = calculateDaysBetweenDates(dates);
 
   transactions.sort((a, b) => new Date(a.date) - new Date(b.date));
 
   transactions.forEach(transaction => {
-    totalTime++;
-    currentBalance += transaction.amount;
-    
+    const daysBetweenTransactions = calculateDaysBetweenDates({
+      startDate: previousDate,
+      endDate: transaction.date
+    });
+
     if (currentBalance > 0) {
-      positiveBalanceTime++;
+      positiveBalanceTimeInDays += daysBetweenTransactions;
     }
+
+    currentBalance += transaction.amount;
+    previousDate = transaction.date;
   });
 
-  const positiveBalancePercentage = (positiveBalanceTime / totalTime) * 100;
+  const remainingDays = calculateDaysBetweenDates({
+    startDate: previousDate, 
+    endDate: new Date(dates.endDate)
+  });
+
+  if (currentBalance > 0) {
+    positiveBalanceTimeInDays += remainingDays;
+  }
+
+  const positiveBalancePercentage = (positiveBalanceTimeInDays / totalTimeInDays) * 100;
 
   return positiveBalancePercentage;
 };

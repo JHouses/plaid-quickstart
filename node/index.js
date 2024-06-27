@@ -322,7 +322,7 @@ app.get('/api/score/get', function (request, response, next) {
         }));
 
         const dates = getStartAndEndDates(simplifiedTransactions);
-        const score = calculateScore(simplifiedTransactions, totalAvailableBalance);
+        const score = calculateScore(simplifiedTransactions, totalAvailableBalance, dates);
         const advice = await getAdvice(JSON.stringify(simplifiedTransactions));
 
         response.json({ dates, simplifiedTransactions, score: score.toFixed(2), advice });
