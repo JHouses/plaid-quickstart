@@ -15,8 +15,8 @@ const MoneyAdvisor = () => {
       setIsLoading(true);
       const response = await getScoreFromItem();
 
-      if (!response) {
-        setError(response);
+      if (response.error) {
+        setError(response.error);
         setIsLoading(false);
         return;
       }
@@ -35,7 +35,10 @@ const MoneyAdvisor = () => {
       {isLoading ? (
         <h6 className={styles.adviceDescription}> We are loading your score... </h6>
       ) : error || !data ? (
-        <h6 className={styles.adviceDescription}> Unfortunately an error occurred, please try again later. </h6>
+        <>
+          <h6 className={styles.adviceDescription}> Unfortunately an error occurred, please try again later. </h6>
+          <h6 className={styles.adviceDescription}> <strong> Error: </strong> {error?.error_message} </h6>
+        </>
       ) : (
         <>
           <h4 className={styles.advisorTitle}>Your Result</h4>
@@ -49,7 +52,7 @@ const MoneyAdvisor = () => {
           </p>
           <div className={styles.adviceContainer}>
             <h3 className={styles.adviceTitle}>Advice:</h3>
-            <h5 className={styles.adviceDescription}>{data?.advice}</h5>  
+            <h5 className={styles.adviceDescription}>{data?.advice}</h5>
           </div>
         </>
       )}
